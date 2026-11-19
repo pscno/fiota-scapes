@@ -179,8 +179,9 @@ input[type=text]{font-family:inherit;font-size:20px;padding:12px 14px;border-rad
 @keyframes combo{from{transform:translate(-50%,-50%) scale(.3);opacity:0}25%{transform:translate(-50%,-50%) scale(1.15);opacity:1}to{transform:translate(-50%,-90%) scale(1);opacity:0}}
 .stars-earn{font-size:44px;font-weight:900;color:#f5a623;text-shadow:0 3px 0 #c27a00;margin:8px 0}
 
-.love{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 22px);text-align:center;color:#fff;font-size:21px;font-weight:800;font-style:italic;letter-spacing:.3px;text-shadow:0 2px 0 rgba(46,122,34,.8),0 4px 14px rgba(0,0,0,.3);padding:0 20px;animation:lovefade 2.6s ease-in-out infinite alternate}
-@keyframes lovefade{from{opacity:.75}to{opacity:1}}
+.love{margin-top:10px;text-align:center;color:#fff;font-size:20px;font-weight:800;font-style:italic;text-shadow:0 2px 0 rgba(46,122,34,.8),0 4px 14px rgba(0,0,0,.25)}
+.love .heart{display:inline-block;font-style:normal;animation:beat 1.2s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
 </style>
 </head>
 <body>
@@ -193,7 +194,7 @@ input[type=text]{font-family:inherit;font-size:20px;padding:12px 14px;border-rad
   </div>
   <div class="sub">Um presente do Nino pra Mari 💚<br><span style="font-weight:600;opacity:.85;font-size:14px">Combine, ganhe estrelas e reforme o jardim. Jogadas infinitas.</span></div>
   <button class="btn green" id="startB" style="font-size:24px;padding:16px 46px">Iniciar</button>
-  <div class="love">te amo infinitamente mais</div>
+  <div class="love">te amo infinitamente mais <span class="heart">❤️</span></div>
 </div>
 
 <div id="garden" class="screen">
@@ -619,7 +620,7 @@ function available() { return TASKS.filter(t => !(t.id in S.tasks)).slice(0, 2);
 // ===== CENA DO JARDIM =====
 function weeds() {
   let g = '';
-  const pts = [[60, 220], [150, 300], [250, 280], [330, 360], [90, 420], [260, 470], [40, 520], [180, 520], [300, 600], [120, 610], [360, 250], [230, 380], [20, 330], [150, 460], [380, 470], [70, 300], [210, 600], [330, 420], [110, 520], [270, 330]];
+  const pts = [[60, 220], [150, 300], [250, 280], [330, 360], [90, 420], [260, 470], [40, 520], [180, 520], [300, 600], [120, 610], [360, 250], [230, 380], [20, 330], [150, 460], [380, 470], [70, 300], [210, 600], [330, 420], [110, 520], [262, 262]];
   pts.forEach(([x, y], i) => {
     if (i % 3 === 2) g += `<ellipse cx="${x}" cy="${y}" rx="8" ry="4" fill="#9a7a4a" transform="rotate(${i * 37} ${x} ${y})"/><ellipse cx="${x + 9}" cy="${y + 3}" rx="6" ry="3" fill="#b08a4a" transform="rotate(${i * 53} ${x} ${y})"/>`;
     else g += `<path d="M${x - 10},${y} q4,-18 6,-2 q3,-22 6,0 q4,-16 6,0 q3,-14 4,2Z" fill="${i % 2 ? '#6d7a3a' : '#7f8a42'}"/>`;
@@ -640,12 +641,11 @@ function sceneSVG(fresh) {
   g += `<rect x="-200" y="165" width="800" height="600" fill="url(#lawn)"/>`;
   if (mato) [[30, 300], [120, 390], [270, 520], [360, 380], [180, 620], [60, 620], [380, 620], [250, 300]].forEach(([x, y]) => g += `<path d="M${x},${y} l3,-8 l2,8 l3,-6 l1,6" stroke="#3f8a2f" stroke-width="1.5" fill="none"/>`);
   for (const id of ORDER) {
-    if (id === 'FIOTA') { g += fiotaSprite(); continue; }
+    if (id === 'FIOTA') { if (!mato) g += `<g class="item" data-id="mato">${weeds()}</g>`; g += fiotaSprite(); continue; }
     const s = st(id); const inner = ART[id](s);
     if (!inner) continue;
     g += `<g class="item${fresh === id ? ' built' : ''}" data-id="${id}">${inner}</g>`;
   }
-  if (!mato) g += `<g class="item" data-id="mato">${weeds()}</g>`;
   available().forEach(t => {
     g += `<g class="marker" data-task="${t.id}" transform="translate(${t.ax},${t.ay})"><g class="pulse"><circle r="17" fill="${S.stars >= t.cost ? '#ff8a00' : '#a0a0a0'}" stroke="#fff" stroke-width="3.5"/><text y="7" text-anchor="middle" font-size="22" font-weight="900" fill="#fff" font-family="ui-rounded,system-ui">!</text></g></g>`;
   });
