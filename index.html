@@ -184,11 +184,11 @@ input[type=text]{font-family:inherit;font-size:20px;padding:12px 14px;border-rad
 <div id="title" class="screen on">
   <h1>Fiota<span>Scapes</span></h1>
   <div class="trio">
-    <div class="pt" id="tMari"></div>
-    <div class="pt big fio bounce" id="tFio"></div>
+    <div class="pt fio" id="tFio"></div>
+    <div class="pt big bounce" id="tMari"></div>
     <div class="pt" id="tEu"></div>
   </div>
-  <div class="sub">Combine, ganhe estrelas e reforme o jardim.<br>Jogadas infinitas 💚</div>
+  <div class="sub">Um presente do Nino pra Mari 💚<br><span style="font-weight:600;opacity:.85;font-size:14px">Combine, ganhe estrelas e reforme o jardim. Jogadas infinitas.</span></div>
   <button class="btn green" id="startB" style="font-size:24px;padding:16px 46px">Jogar</button>
 </div>
 
@@ -525,14 +525,14 @@ const ITEM_BOX = {
 'use strict';
 // ===== ESTADO / SALVAR =====
 const KEY = 'fiotascapes-v1';
-const DEF = { name: '', stars: 0, level: 1, tasks: {}, owned: [], worn: [], sound: true, intro: false, finale: false };
+const DEF = { name: 'Nino', stars: 0, level: 1, tasks: {}, owned: [], worn: [], sound: true, intro: false, finale: false };
 let S = Object.assign({}, DEF);
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign({}, DEF, JSON.parse(raw)); } catch (e) { }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { } }
 function wornMap() { const m = {}; S.worn.forEach(w => m[w] = 1); return m; }
 const $ = s => document.querySelector(s);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const EU = () => (S.name || 'Eu');
+const EU = () => (S.name || 'Nino');
 
 // ===== SOM =====
 let AC = null;
@@ -587,20 +587,20 @@ function dialog(lines) {
 
 // ===== DADOS DO JARDIM =====
 const TASKS = [
-  { id: 'mato', name: 'Tirar o mato', cost: 1, styles: [], ax: 200, ay: 560, before: [['mari', 'Amor, olha esse jardim... tá tudo tomado pelo mato!'], ['eu', 'Bora começar limpando tudo.']], after: [['fiota', 'Au! Au! 🐾'], ['mari', 'Olha a Fiota correndo na grama! 💚']] },
-  { id: 'caminho', name: 'Fazer o caminho', cost: 1, styles: ['Pedras', 'Tijolinho', 'Madeira'], ax: 200, ay: 300, before: [['eu', 'Precisamos de um caminho até a porta.']], after: [['mari', 'Ficou lindo! Nada mais de pé sujo de lama.']] },
-  { id: 'casinha', name: 'Casinha da Fiota', cost: 2, styles: ['Vermelha', 'Azul', 'Amarela'], ax: 340, ay: 300, before: [['mari', 'A Fiota merece uma casinha só dela.'], ['fiota', 'Au? 👀']], after: [['fiota', 'Au au au! 💕'], ['eu', 'Pronto, princesa. É toda sua.']] },
-  { id: 'canteiros', name: 'Plantar canteiros', cost: 2, styles: ['Rosas', 'Girassóis', 'Lavanda'], ax: 136, ay: 246, before: [['mari', 'Quero flores! Muitas flores! 🌸']], after: [['mari', 'Agora sim parece um jardim de verdade.'], ['fiota', '(cheirando cada florzinha...) 🐾']] },
-  { id: 'cerca', name: 'Consertar a cerca', cost: 2, styles: ['Branca', 'Madeira', 'Verde'], ax: 60, ay: 168, before: [['eu', 'Essa cerca tá caindo aos pedaços.']], after: [['eu', 'Firme e bonita!'], ['fiota', 'Au! (agora dá pra latir pros vizinhos em segurança)']] },
-  { id: 'banco', name: 'Banco do jardim', cost: 2, styles: ['Madeira', 'Branco', 'Azul'], ax: 96, ay: 344, before: [['mari', 'Um banquinho pra gente ver a Fiota brincar?']], after: [['mari', 'Senta aqui comigo, amor. ☺️']] },
-  { id: 'arvore', name: 'Plantar uma árvore', cost: 2, styles: ['Cerejeira', 'Laranjeira', 'Ipê-amarelo'], ax: 45, ay: 230, before: [['eu', 'Uma árvore pra fazer sombra pra Fiota.']], after: [['fiota', '(deitou na sombra e não levanta mais) 😴']] },
+  { id: 'mato', name: 'Tirar o mato', cost: 1, styles: [], ax: 200, ay: 560, before: [['mari', 'Olha esse jardim... tá tudo tomado pelo mato!'], ['eu', 'Bora começar limpando tudo, Mari.']], after: [['fiota', 'Au! Au! 🐾'], ['eu', 'Olha a Fiota correndo na grama! 💚']] },
+  { id: 'caminho', name: 'Fazer o caminho', cost: 1, styles: ['Pedras', 'Tijolinho', 'Madeira'], ax: 200, ay: 300, before: [['mari', 'Precisamos de um caminho até a porta.']], after: [['eu', 'Ficou lindo, amor! Nada mais de pé sujo de lama.']] },
+  { id: 'casinha', name: 'Casinha da Fiota', cost: 2, styles: ['Vermelha', 'Azul', 'Amarela'], ax: 340, ay: 300, before: [['mari', 'A Fiota merece uma casinha só dela.'], ['fiota', 'Au? 👀']], after: [['fiota', 'Au au au! 💕'], ['mari', 'Pronto, princesa. É toda sua.']] },
+  { id: 'canteiros', name: 'Plantar canteiros', cost: 2, styles: ['Rosas', 'Girassóis', 'Lavanda'], ax: 136, ay: 246, before: [['mari', 'Quero flores! Muitas flores! 🌸']], after: [['eu', 'Agora sim parece um jardim de verdade.'], ['fiota', '(cheirando cada florzinha...) 🐾']] },
+  { id: 'cerca', name: 'Consertar a cerca', cost: 2, styles: ['Branca', 'Madeira', 'Verde'], ax: 60, ay: 168, before: [['eu', 'Essa cerca tá caindo aos pedaços.']], after: [['mari', 'Firme e bonita!'], ['fiota', 'Au! (agora dá pra latir pros vizinhos em segurança)']] },
+  { id: 'banco', name: 'Banco do jardim', cost: 2, styles: ['Madeira', 'Branco', 'Azul'], ax: 96, ay: 344, before: [['eu', 'Um banquinho pra gente ver a Fiota brincar?']], after: [['mari', 'Senta aqui comigo, amor. ☺️']] },
+  { id: 'arvore', name: 'Plantar uma árvore', cost: 2, styles: ['Cerejeira', 'Laranjeira', 'Ipê-amarelo'], ax: 45, ay: 230, before: [['mari', 'Uma árvore pra fazer sombra pra Fiota.']], after: [['fiota', '(deitou na sombra e não levanta mais) 😴']] },
   { id: 'fonte', name: 'Restaurar a fonte', cost: 3, styles: ['Pedra', 'Azulejo azul', 'Rosa'], ax: 200, ay: 425, before: [['mari', 'Essa fonte velha podia voltar a funcionar...']], after: [['eu', 'Água correndo de novo! 💧'], ['fiota', '(bebendo água da fonte escondida) 👅']] },
   { id: 'casa', name: 'Pintar a casa', cost: 3, styles: ['Amarela', 'Azul', 'Rosa'], ax: 200, ay: 70, before: [['mari', 'A casa tá tão desbotada... vamos pintar?']], after: [['mari', 'Ficou a nossa cara!'], ['eucool', 'Melhor casa da rua. 😎']] },
-  { id: 'horta', name: 'Montar a horta', cost: 2, styles: ['Verduras', 'Tomates', 'Temperos'], ax: 335, ay: 415, before: [['eu', 'Que tal uma hortinha?']], after: [['mari', 'Salada fresquinha todo dia! 🥬']] },
+  { id: 'horta', name: 'Montar a horta', cost: 2, styles: ['Verduras', 'Tomates', 'Temperos'], ax: 335, ay: 415, before: [['mari', 'Que tal uma hortinha?']], after: [['eu', 'Salada fresquinha todo dia! 🥬']] },
   { id: 'balanco', name: 'Balanço', cost: 2, styles: ['Madeira', 'Metal azul', 'Pneu'], ax: 66, ay: 450, before: [['mari', 'Sempre quis um balanço no jardim!']], after: [['mari', 'Uhuuul! 🎉'], ['fiota', '(latindo a cada ida e volta) Au! Au!']] },
-  { id: 'mesa', name: 'Mesa de piquenique', cost: 3, styles: ['Madeira', 'Toalha xadrez', 'Branca'], ax: 85, ay: 560, before: [['eu', 'Uma mesa pra receber os amigos.']], after: [['mari', 'Já pensou num café da tarde aqui? ☕']] },
-  { id: 'churras', name: 'Churrasqueira', cost: 3, styles: ['Tijolinho', 'Pedra', 'Azulejo'], ax: 338, ay: 560, before: [['eu', 'Agora o mais importante: a churrasqueira! 🔥']], after: [['eucool', 'Domingo tem churrasco!'], ['fiota', '(...alguém falou em linguiça?) 👀']] },
-  { id: 'luzes', name: 'Varal de luzinhas', cost: 3, styles: ['Amarelas', 'Coloridas', 'Lanternas'], ax: 330, ay: 140, before: [['mari', 'Pra fechar: luzinhas pra noite!']], after: [['mari', 'Ficou mágico... ✨'], ['eu', 'Nosso jardim tá pronto, amor.'], ['fiota', 'Au! 💕']] },
+  { id: 'mesa', name: 'Mesa de piquenique', cost: 3, styles: ['Madeira', 'Toalha xadrez', 'Branca'], ax: 85, ay: 560, before: [['mari', 'Uma mesa pra receber os amigos.']], after: [['eu', 'Café da tarde aqui vai ser demais! ☕']] },
+  { id: 'churras', name: 'Churrasqueira', cost: 3, styles: ['Tijolinho', 'Pedra', 'Azulejo'], ax: 338, ay: 560, before: [['eu', 'Mari, agora o mais importante: a churrasqueira! 🔥']], after: [['eucool', 'Domingo tem churrasco!'], ['fiota', '(...alguém falou em linguiça?) 👀']] },
+  { id: 'luzes', name: 'Varal de luzinhas', cost: 3, styles: ['Amarelas', 'Coloridas', 'Lanternas'], ax: 330, ay: 140, before: [['mari', 'Pra fechar: luzinhas pra noite!']], after: [['mari', 'Ficou mágico... ✨'], ['eu', 'Você deixou nosso jardim perfeito, Mari.'], ['fiota', 'Au! 💕']] },
 ];
 const TBY = Object.fromEntries(TASKS.map(t => [t.id, t]));
 const ACC = [
@@ -698,7 +698,7 @@ async function openTask(id) {
   await dialog(t.after);
   if (doneCount() === TASKS.length && !S.finale) {
     S.finale = true; save();
-    await dialog([['mari', 'Conseguimos! O jardim mais lindo do mundo. 🏡'], ['eucool', 'E as fases continuam infinitas. Dá pra trocar os estilos quando quiser.'], ['fiota', '(e gastar as estrelas com mimos pra Fiota!) 🐾']]);
+    await dialog([['eucool', 'Você conseguiu, Mari! O jardim mais lindo do mundo. 🏡'], ['mari', 'E as fases continuam infinitas. Dá pra trocar os estilos quando quiser.'], ['fiota', '(e gastar as estrelas com mimos pra Fiota!) 🐾']]);
   }
 }
 function itemPreview(id, s) {
@@ -741,7 +741,7 @@ function openShop() {
   draw();
 }
 function openSettings() {
-  const c = modal(`<h2>⚙️ Ajustes</h2><p style="text-align:left;font-weight:800">Seu nome</p><input type="text" id="nmIn" maxlength="16" value="${S.name.replace(/"/g, '&quot;')}">
+  const c = modal(`<h2>⚙️ Ajustes</h2><p style="text-align:left;font-weight:800">Nome do marido</p><input type="text" id="nmIn" maxlength="16" value="${S.name.replace(/"/g, '&quot;')}">
   <div class="toggle">🔊 Sons <button class="btn small ${S.sound ? 'green' : 'gray'}" id="sndB">${S.sound ? 'Ligado' : 'Desligado'}</button></div>
   <p class="small-note" style="margin-top:14px">📲 <b>Instalar no iPhone:</b> abra no Safari → botão Compartilhar → <b>Adicionar à Tela de Início</b>. Depois disso o jogo abre em tela cheia e funciona sem internet. O progresso fica salvo no aparelho.</p>
   <div class="row"><button class="btn green small" id="okB">Salvar</button><button class="btn gray small" id="rsB">Recomeçar do zero</button></div>`);
@@ -756,14 +756,14 @@ function openSettings() {
 function askName() {
   return new Promise(res => {
     $('#modal').dataset.lock = '1';
-    const c = modal(`<h2>Olá! 👋</h2><div class="trio" style="margin:8px 0 12px"><div class="pt" style="width:80px;height:80px">${portrait('eu')}</div></div><p>Como você se chama?</p><input type="text" id="nmIn" maxlength="16" placeholder="Seu nome"><div class="row"><button class="btn green" id="okB">Continuar</button></div>`);
+    const c = modal(`<h2>Oi, Mari! 👋</h2><div class="trio" style="margin:8px 0 12px"><div class="pt" style="width:80px;height:80px">${portrait('mari')}</div><div class="pt" style="width:80px;height:80px">${portrait('eu')}</div></div><p>Qual é o nome do seu marido no jogo?</p><input type="text" id="nmIn" maxlength="16" placeholder="Nome dele"><div class="row"><button class="btn green" id="okB">Continuar</button></div>`);
     const go = () => { S.name = c.querySelector('#nmIn').value.trim(); save(); $('#modal').dataset.lock = ''; closeModal(); res(); };
     c.querySelector('#okB').onclick = go;
     c.querySelector('#nmIn').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   });
 }
 async function intro() {
-  await dialog([['mari', 'Amor, olha o estado desse jardim... 😱'], ['eu', 'Vamos reformar tudo! Cada fase que a gente passa vale uma estrela ⭐.'], ['mari', 'E aqui ninguém tem pressa: as jogadas são infinitas! 💚'], ['fiota', 'Au! Au! 🐾']]);
+  await dialog([['mari', 'Amor, olha o estado desse jardim... 😱'], ['eu', 'Bora reformar tudo, Mari! Cada fase que você passar vale uma estrela ⭐.'], ['mari', 'E sem pressa nenhuma: as jogadas são infinitas! 💚'], ['fiota', 'Au! Au! 🐾']]);
   S.intro = true; save();
 }
 
@@ -1021,7 +1021,7 @@ function comboText(txt) { const d = document.createElement('div'); d.className =
 let bubT, lastReact = 0;
 function react(force) {
   const now = Date.now(); if (!force && now - lastReact < 2500) return; lastReact = now;
-  const opts = [['fiota', 'Au au! 🐾', 150], ['mari', 'Arrasou, amor! 💚', 20], ['eucool', 'Brabo! 😎', 85], ['fiota', '(abanando o rabo) 🐕', 150], ['mari', 'Isso! ✨', 20], ['eucool', 'Que jogada! 🔥', 85]];
+  const opts = [['fiota', 'Au au! 🐾', 150], ['mari', 'Isso! ✨', 20], ['eucool', 'Arrasou, Mari! 😎', 85], ['fiota', '(abanando o rabo) 🐕', 150], ['mari', 'Uhul! 💚', 20], ['eucool', 'Que jogada, amor! 🔥', 85]];
   const [who, txt, tail] = opts[Math.random() * opts.length | 0];
   const b = $('#bubble'); b.textContent = txt; b.style.setProperty('--tail', tail + 'px'); b.classList.add('on');
   $('#miniEu').innerHTML = portrait(who === 'eucool' ? 'eucool' : 'eu');
@@ -1188,7 +1188,7 @@ async function levelComplete() {
   comboText('Fase concluída!');
   await sleep(900);
   $('#modal').dataset.lock = '1';
-  const c = modal(`<h2>Fase ${G.n} concluída! 🎉</h2><div class="trio"><div class="pt" style="width:84px;height:84px">${portrait('mari')}</div><div class="pt big fio bounce" style="width:104px;height:104px">${portrait('fiota')}</div><div class="pt" style="width:84px;height:84px">${portrait('eucool')}</div></div>
+  const c = modal(`<h2>Fase ${G.n} concluída! 🎉</h2><div class="trio"><div class="pt" style="width:84px;height:84px">${portrait('fiota')}</div><div class="pt big bounce" style="width:104px;height:104px">${portrait('mari')}</div><div class="pt" style="width:84px;height:84px">${portrait('eucool')}</div></div>
   <div class="stars-earn">+${earned} ⭐</div><p>${G.moves} jogadas${bonus ? ' — <b>bônus de rapidez!</b>' : ''}</p><p class="small-note" style="text-align:center">Total: ${S.stars} ⭐</p>
   <div class="row"><button class="btn green" id="toG">🏡 Jardim</button><button class="btn" id="nxL">Fase ${S.level} ▶</button></div>`);
   setTimeout(sfx.star, 300); if (bonus) setTimeout(sfx.star, 550);
@@ -1215,7 +1215,7 @@ $('#tEu').innerHTML = portrait('eu'); $('#tMari').innerHTML = portrait('mari'); 
 $('#startB').onclick = async () => {
   ac(); sfx.click();
   goGarden();
-  if (!S.intro) { if (!S.name) await askName(); await intro(); renderGarden(); }
+  if (!S.intro) { await intro(); renderGarden(); }
 };
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('dblclick', e => e.preventDefault());
