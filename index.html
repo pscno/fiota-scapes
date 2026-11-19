@@ -178,6 +178,9 @@ input[type=text]{font-family:inherit;font-size:20px;padding:12px 14px;border-rad
 .combo{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);font-size:40px;font-weight:900;color:#fff;text-shadow:0 4px 0 #c27a00,0 0 20px #ffb01a;pointer-events:none;z-index:8;animation:combo .9s ease-out forwards;white-space:nowrap}
 @keyframes combo{from{transform:translate(-50%,-50%) scale(.3);opacity:0}25%{transform:translate(-50%,-50%) scale(1.15);opacity:1}to{transform:translate(-50%,-90%) scale(1);opacity:0}}
 .stars-earn{font-size:44px;font-weight:900;color:#f5a623;text-shadow:0 3px 0 #c27a00;margin:8px 0}
+
+.love{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 22px);text-align:center;color:#fff;font-size:21px;font-weight:800;font-style:italic;letter-spacing:.3px;text-shadow:0 2px 0 rgba(46,122,34,.8),0 4px 14px rgba(0,0,0,.3);padding:0 20px;animation:lovefade 2.6s ease-in-out infinite alternate}
+@keyframes lovefade{from{opacity:.75}to{opacity:1}}
 </style>
 </head>
 <body>
@@ -189,7 +192,8 @@ input[type=text]{font-family:inherit;font-size:20px;padding:12px 14px;border-rad
     <div class="pt" id="tEu"></div>
   </div>
   <div class="sub">Um presente do Nino pra Mari 💚<br><span style="font-weight:600;opacity:.85;font-size:14px">Combine, ganhe estrelas e reforme o jardim. Jogadas infinitas.</span></div>
-  <button class="btn green" id="startB" style="font-size:24px;padding:16px 46px">Jogar</button>
+  <button class="btn green" id="startB" style="font-size:24px;padding:16px 46px">Iniciar</button>
+  <div class="love">te amo infinitamente mais</div>
 </div>
 
 <div id="garden" class="screen">
@@ -749,7 +753,7 @@ function openSettings() {
   c.querySelector('#okB').onclick = () => { S.name = c.querySelector('#nmIn').value.trim(); save(); closeModal(); };
   c.querySelector('#rsB').onclick = () => {
     const c2 = modal(`<h2>Recomeçar?</h2><p>Isso apaga o jardim, as estrelas e as fases.</p><div class="row"><button class="btn small" id="y">Sim, apagar tudo</button><button class="btn small gray" id="n">Cancelar</button></div>`);
-    c2.querySelector('#y').onclick = () => { const nm = S.name; S = Object.assign({}, DEF, { name: nm, tasks: {}, owned: [], worn: [] }); save(); closeModal(); renderGarden(); intro(); };
+    c2.querySelector('#y').onclick = () => { const nm = S.name; S = Object.assign({}, DEF, { name: nm, tasks: {}, owned: [], worn: [] }); save(); closeModal(); show('title'); };
     c2.querySelector('#n').onclick = closeModal;
   };
 }
